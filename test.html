@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Data to Google Sheets</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Send Data to Google Sheets</h1>
+  <img src="https://drive.google.com/file/d/1f9j9GklfSNHbtYhEX1z5amGG4D7qFfx3/view?usp=sharing" alt="">
+  <input type="text" id="regNoInput" placeholder="Enter Registration Number">
+  <input type="text" id="conceptInput" placeholder="Enter Concept">
+  <input type="text" id="topicInput" placeholder="Enter Topic">
+  <input type="text" id="levelInput" placeholder="Enter Level">
+  <input type="text" id="scoreInput" placeholder="Enter Score">
+  <button id="submitButton">Submit</button>
+  <script>
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbxG89bKv6Joi-pmaLHEpskObDQNeCuRro9JzK8u00WT789ZsneZJsKTVgidTT5v0E1-/exec'; // Replace with your Google Apps Script web app URL
+
+      $(document).ready(function() {
+        $('#submitButton').click(function() {
+          var regNo = $('#regNoInput').val();
+          var concept = $('#conceptInput').val();
+          var topic = $('#topicInput').val();
+          var level = $('#levelInput').val();
+          var score = $('#scoreInput').val();
+          
+          sendData(regNo, concept, topic, level, score);
+        });
+      });
+
+      function sendData(regNo, concept, topic, level, score) {
+        var payload = {
+          regNo: regNo,
+          concept: concept,
+          topic: topic,
+          level: level,
+          score: score
+        };
+
+        $.post(scriptUrl, JSON.stringify(payload), function(response) {
+          alert('Response from server: ' + response);
+        }).fail(function(xhr, status, error) {
+          console.error('Error:', error);
+        });
+      }
+
+  </script>
+</body>
+</html>
